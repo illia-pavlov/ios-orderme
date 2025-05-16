@@ -97,3 +97,9 @@ Pods/Pods.xcodeproj/xcuserdata/*
 orderMe.xcodeproj/xcuserdata/*
 orderMe.xcworkspace/xcuserdata/*
 
+allure-report/
+allure-results/
+TestResults/
+TestResults.xcresult/
+Podfile
+

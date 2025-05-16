@@ -26,9 +26,10 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldUseLaunchSchemeArgsEnv = "NO"
       language = "en"
-      region = "US">
+      region = "US"
+      codeCoverageEnabled = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -38,12 +39,19 @@
             ReferencedContainer = "container:orderMe.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "XCTestConfigurationFilePath"
+            value = ""
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "22722DA5226EBD6500B352A8"
+               BlueprintIdentifier = "28E1D62A2DD4F3390028EF98"
                BuildableName = "OrderMEUITests.xctest"
                BlueprintName = "OrderMEUITests"
                ReferencedContainer = "container:orderMe.xcodeproj">
