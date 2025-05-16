@@ -1,29 +1,20 @@
-name: Debug Upload Artifact
+name: CI Pipeline
 
 on: [push, pull_request]
 
 jobs:
-  test-upload-artifact:
-    runs-on: windows-latest
-
+  build-and-test:
+    runs-on: macos-latest
     steps:
-      - name: Debug Runner Environment
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
         run: |
-          echo "Runner OS: $RUNNER_OS"
-          echo "Runner Temp Path: $RUNNER_TEMP"
-          echo "Runner Tool Cache: $RUNNER_TOOL_CACHE"
-
-      - name: Check Access to Action Repo
-        run: |
-          curl -I https://api.github.com/repos/actions/upload-artifact
-
-      - name: Create Test Report Directory
-        run: |
-          mkdir -p allure-report
-          echo "Test report content" > allure-report/test.txt
-
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v3.1.2
+          brew install allure
+          gem install xcpretty
+      - name: Run Tests and Generate Allure Report
+        run: ./generate_allure_report.sh
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4
         with:
-          name: test-report
+          name: allure-report
           path: allure-report
