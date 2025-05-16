@@ -16,5 +16,3 @@ mv allure-results-tmp/* allure-results/
 rm -rf allure-results-tmp
 allure generate allure-results -o allure-report
 
-# Optional: Copy report to a location for CI/CD to archive
-cp -r allure-report /path/to/ci/artifacts/  # Adjust path as needed
