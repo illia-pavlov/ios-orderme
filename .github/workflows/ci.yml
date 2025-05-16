@@ -7,14 +7,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check Internet Connectivity
+      - name: Debug Runner Environment
         run: |
-          ping -c 4 github.com
+          echo "Runner OS: $RUNNER_OS"
+          echo "Runner Temp Path: $RUNNER_TEMP"
+          echo "Runner Tool Cache: $RUNNER_TOOL_CACHE"
+          echo "GitHub Actions Version:"
+          cat /usr/local/actions-runner/.env 2>/dev/null || echo "Runner version info not found"
+
+      - name: Verify Access to Marketplace
+        run: |
           curl -I https://github.com/actions/upload-artifact
 
-      - name: Check Action Versions
-        run: |
-          curl -s https://api.github.com/repos/actions/upload-artifact/releases | jq -r '.[].tag_name'
+      - name: Clear Cache
+        run: rm -rf $RUNNER_TOOL_CACHE/actions
 
       - name: Create Test Report Directory
         run: |
@@ -22,7 +28,7 @@ jobs:
           echo "Test report content" > allure-report/test.txt
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@f43a0e5ff2bd294095638e18286ca9a3d1956744
         with:
           name: test-report
           path: allure-report
