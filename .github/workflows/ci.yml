@@ -7,14 +7,20 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Debug Actions
+        run: ls -R $RUNNER_TOOL_CACHE/actions
+
       - name: Install Dependencies
         run: |
           brew install allure
           gem install xcpretty
+
       - name: Run Tests and Generate Allure Report
         run: ./generate_allure_report.sh
+
       - name: Upload Allure Report
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v3
         with:
           name: allure-report
           path: allure-report
