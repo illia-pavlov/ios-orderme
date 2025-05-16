@@ -4,16 +4,24 @@ on: [push, pull_request]
 
 jobs:
   build-and-test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
-      - name: Debug Actions
-        run: ls -R $RUNNER_TOOL_CACHE/actions
+      - name: Check Internet Connectivity
+        run: |
+          ping -c 4 github.com
+          curl -I https://github.com/actions/upload-artifact
+
+      - name: Verify Action Versions
+        run: |
+          curl -s https://api.github.com/repos/actions/upload-artifact/releases | jq -r '.[].tag_name'
 
       - name: Install Dependencies
         run: |
-          brew install allure
+          sudo apt-get update
+          sudo apt-get install -y allure
           gem install xcpretty
 
       - name: Run Tests and Generate Allure Report
@@ -24,3 +32,7 @@ jobs:
         with:
           name: allure-report
           path: allure-report
+
+      - name: Inspect Runner Actions Directory
+        run: |
+          ls -la /home/runner/work/_actions
