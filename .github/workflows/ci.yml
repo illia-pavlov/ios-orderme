@@ -1,38 +1,28 @@
-name: CI Pipeline
+name: Debug Upload Artifact
 
 on: [push, pull_request]
 
 jobs:
-  build-and-test:
+  test-upload-artifact:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
       - name: Check Internet Connectivity
         run: |
           ping -c 4 github.com
           curl -I https://github.com/actions/upload-artifact
 
-      - name: Verify Action Versions
+      - name: Check Action Versions
         run: |
           curl -s https://api.github.com/repos/actions/upload-artifact/releases | jq -r '.[].tag_name'
 
-      - name: Install Dependencies
+      - name: Create Test Report Directory
         run: |
-          sudo apt-get update
-          sudo apt-get install -y allure
-          gem install xcpretty
+          mkdir -p allure-report
+          echo "Test report content" > allure-report/test.txt
 
-      - name: Run Tests and Generate Allure Report
-        run: ./generate_allure_report.sh
-
-      - name: Upload Allure Report
+      - name: Upload Test Report
         uses: actions/upload-artifact@v3
         with:
-          name: allure-report
+          name: test-report
           path: allure-report
-
-      - name: Inspect Runner Actions Directory
-        run: |
-          ls -la /home/runner/work/_actions
